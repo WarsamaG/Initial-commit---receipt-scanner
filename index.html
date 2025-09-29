@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receipt Scanner</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- Tesseract.js from CDN for OCR in the browser -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Receipt Scanner</h1>
+    </header>
+
+    <main class="container">
+      <!-- Upload Area: drag & drop or click to choose an image -->
+      <section class="upload-section" aria-labelledby="upload-title">
+        <h2 id="upload-title" class="visually-hidden">Upload Receipt Image</h2>
+        <div id="drop-area" class="drop-area" tabindex="0" role="button" aria-label="Upload or drop a receipt image">
+          <div class="drop-area-inner">
+            <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M19 15v4H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4zM12 1l-5 5h3v6h4V6h3z"/>
+            </svg>
+            <p class="drop-text"><strong>Drag & drop</strong> a receipt image here</p>
+            <p class="drop-subtext">or</p>
+            <button id="browse-btn" class="btn primary" type="button">Choose Image</button>
+            <input id="file-input" class="sr-only" type="file" accept="image/*" aria-label="Choose receipt image" />
+          </div>
+        </div>
+        <p id="hint" class="hint">Supported: JPG, PNG, GIF. Processed locally in your browser.</p>
+      </section>
+
+      <!-- Progress + Status -->
+      <section class="status" aria-live="polite" aria-atomic="true">
+        <div id="progress" class="progress hidden">
+          <div class="spinner" aria-hidden="true"></div>
+          <div>
+            <p id="status-text" class="status-text">Initializing OCR…</p>
+            <progress id="progress-bar" max="1" value="0" class="progress-bar"></progress>
+          </div>
+        </div>
+        <p id="error" class="error hidden" role="alert"></p>
+      </section>
+
+      <!-- Results -->
+      <section class="results" aria-labelledby="results-title">
+        <h2 id="results-title">Extracted Data</h2>
+        <div class="card">
+          <div class="field"><span class="label">Date:</span><span id="date-value" class="value">—</span></div>
+          <div class="field"><span class="label">Merchant:</span><span id="merchant-value" class="value">—</span></div>
+          <div class="field"><span class="label">Total:</span><span id="total-value" class="value">—</span></div>
+        </div>
+        <div class="actions">
+          <button id="download-csv" class="btn" type="button" disabled>Download CSV</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>OCR runs entirely in your browser. No uploads to a server.</p>
+    </footer>
+  </body>
+</html>
